@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     static final int SIZE = 5;
     static final int DOTS_TO_WIN = 4;
+    static final boolean AI_LEVEL = false;
 
     static final char DOT_X = 'X';
     static final char DOT_O = 'O';
@@ -91,12 +92,40 @@ public class Main {
     }
 
     public static void aiTurn() {
-        int x, y;
+        int x = -1;
+        int y = -1;
 
-        do {
-            x = random.nextInt(SIZE);
-            y = random.nextInt(SIZE);
-        } while (!isCellValid(y, x));
+        if (AI_LEVEL) {
+            do {
+                x = random.nextInt(SIZE);
+                y = random.nextInt(SIZE);
+            } while (!isCellValid(y, x));
+        } else {
+            for (int i = 0; i < SIZE; i++) {
+                if (map[i][i] == DOT_X) {
+                    x = i + 1;
+                    y = i + 1;
+                }
+//                if (map[i][SIZE - 1 - i] == DOT_X) {
+//                }
+                for (int j = 0; j < SIZE; j++) {
+                    if (map[i][j] == DOT_X) {
+                        x = i + 1;
+                        y = j + 1;
+                    }
+                    if (map[j][i] == DOT_X) {
+                        x = j + 1;
+                        y = i + 1;
+                    }
+                }
+                if (x == -1 && y == -1) {
+                    do {
+                        x = random.nextInt(SIZE);
+                        y = random.nextInt(SIZE);
+                    } while (!isCellValid(y, x));
+                }
+            }
+        }
 
         map[y][x] = DOT_O;
     }
