@@ -1,6 +1,6 @@
 package java2hw1;
 
-public class RunningTrack {
+public class RunningTrack implements Obstacles{
     private int trackDistance;
 
     public RunningTrack(int trackDistance) {
@@ -11,13 +11,13 @@ public class RunningTrack {
         return trackDistance;
     }
 
-    public boolean passTrack(int distance) {
-        if (distance >= trackDistance) {
-            distance -= trackDistance;
+    @Override
+    public boolean passObstacle(int value) {
+        if (value >= trackDistance) {
+            value -= trackDistance;
             return true;
         } else {
             return false;
         }
-
     }
 }

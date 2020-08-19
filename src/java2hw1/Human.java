@@ -4,6 +4,7 @@ public class Human implements Actions {
     private String name;
     private int distance;
     private int height;
+    private boolean win;
 
     public Human(String name, int distance, int height) {
         this.name = name;
@@ -31,19 +32,32 @@ public class Human implements Actions {
 
     @Override
     public void runTrack(RunningTrack runningTrack) {
-        if (runningTrack.passTrack(distance)) {
+        if (runningTrack.passObstacle(distance)) {
             System.out.println(name + ": успешно пробежал!!!");
+            win = true;
         } else {
             System.out.println(name + ": неуспешно пробежал!!!");
+            win = false;
         }
     }
 
     @Override
     public void jumpWall(Wall wall) {
-        if (wall.passWall(height)) {
+        if (wall.passObstacle(height)) {
             System.out.println(name + ": успешно прыгнул!!!");
+            win = true;
         } else {
             System.out.println(name + ": неуспешно прыгнул!!!");
+            win = false;
+        }
+    }
+
+    @Override
+    public void checkWin() {
+        if (win) {
+            System.out.println(name + ": Прошел всю трассу!!!");
+        } else {
+            System.out.println(name + ": Не прошел!!!");
         }
     }
 }

@@ -5,4 +5,5 @@ public interface Actions {
     void jump();
     void runTrack(RunningTrack runningTrack);
     void jumpWall(Wall wall);
+    void checkWin();
 }

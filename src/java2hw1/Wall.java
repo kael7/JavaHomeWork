@@ -1,6 +1,6 @@
 package java2hw1;
 
-public class Wall {
+public class Wall implements Obstacles{
     private int wallHeight;
 
     public Wall(int wallHeight) {
@@ -11,12 +11,12 @@ public class Wall {
         return wallHeight;
     }
 
-    public boolean passWall(int height) {
-        if (height >= wallHeight) {
+    @Override
+    public boolean passObstacle(int value) {
+        if (value >= wallHeight) {
             return true;
         } else {
             return false;
         }
-
     }
 }

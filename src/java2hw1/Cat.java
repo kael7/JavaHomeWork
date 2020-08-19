@@ -4,6 +4,7 @@ public class Cat implements Actions {
     private String name;
     private int distance;
     private int height;
+    private boolean win;
 
     public Cat(String name, int distance, int height) {
         this.name = name;
@@ -31,7 +32,7 @@ public class Cat implements Actions {
 
     @Override
     public void runTrack(RunningTrack runningTrack) {
-        if (runningTrack.passTrack(distance)) {
+        if (runningTrack.passObstacle(distance)) {
             System.out.println(name + ": успешно пробежал!!!");
         } else {
             System.out.println(name + ": неуспешно пробежал!!!");
@@ -40,10 +41,19 @@ public class Cat implements Actions {
 
     @Override
     public void jumpWall(Wall wall) {
-        if (wall.passWall(height)) {
+        if (wall.passObstacle(height)) {
             System.out.println(name + ": успешно прыгнул!!!");
         } else {
             System.out.println(name + ": неуспешно прыгнул!!!");
+        }
+    }
+
+    @Override
+    public void checkWin() {
+        if (win) {
+            System.out.println(name + ": Прошел всю трассу!!!");
+        } else {
+            System.out.println(name + ": Не прошел!!!");
         }
     }
 }
