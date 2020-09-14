@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.Arrays;
 
 public class ClientHandler {
@@ -23,6 +24,7 @@ public class ClientHandler {
 
             new Thread(() -> {
                 try {
+                    socket.setSoTimeout(120000);
                     //цикл аутентификации
                     while (true) {
                         String str = in.readUTF();
@@ -38,6 +40,7 @@ public class ClientHandler {
                                 sendMsg("/authok " + nickname);
                                 server.subscribe(this);
                                 System.out.println("Клиент " + nickname + " подключился");
+                                socket.setSoTimeout(0);
                                 break;
                             } else {
                                 sendMsg("Неверный логин / пароль");
@@ -63,6 +66,8 @@ public class ClientHandler {
                             server.broadcastMsg(this, str);
                         }
                     }
+                } catch (SocketTimeoutException e){
+                    System.out.println("Время ожидания закончилось!!!");
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
